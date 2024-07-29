@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">login
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting India</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'login.css'%}">
+    <style>
+        h1{
+            color: black;
+
+        }
+        h1:hover{
+            color:yellow;
+            text-shadow: 2px 2px 4px #000000;
+         }
+    </style>
+</head>
+<body>
+    <h1>"Your vote shapes the future; let your voice be the beacon of change."</h1>
+    <div class="container">
+        <form method="POST">
+            {% csrf_token %}
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" name="firstname" required>
+            <label for="fname">Last Name</label>
+            <input type="text" id="fname" name="lastname" required>
+            <label for="femail">Email</label>
+            <input type="email" id="femail" name="email" required>
+            <label for="fmob">Mobile</label>
+            <input type="text" id="fmob" name="mobile" required>
+            <label for="fpassword">Username</label>
+            <input type="text" id="fmob" name="username" required>
+            <label for="fpassword">Password</label>
+            <input type="password" id="fpassword" name="password" required>
+            <button type="submit">Submit</button>
+        </form>
+        <a href="{% url 'login' %}">Login</a> 
+
+    </div>
+</body>
+
+</html>

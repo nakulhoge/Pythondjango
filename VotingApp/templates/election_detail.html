@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Election Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #36b3dc;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1, h2, h3, p {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .messages {
+            padding: 20px;
+            background-color: #ddd;
+            margin-top: 20px;
+            list-style: none;
+        }
+
+        .messages li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Election Detail</h1>
+        <h2>{{ election.title }}</h2>
+        <p>Start Date: {{ election.start_date }}</p>
+        <p>End Date: {{ election.end_date }}</p>
+
+        <h3>Available Candidates:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Candidate</th>
+                    <th>Party</th>
+                    <th>Symbol</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for candidate in candidates %}
+                    <tr>
+                        <td>{{ candidate.name }}</td>
+                        <td>{{ candidate.party_name }}</td>
+                        <td><img src="{{ candidate.symbol.url }}" alt="{{ candidate.name }}"></td>
+                        <td>
+                            <form action="{% url 'vote' election_id=election.id candidate_id=candidate.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit">Vote</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</body>
+</html>
